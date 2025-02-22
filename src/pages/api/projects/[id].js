@@ -1,9 +1,15 @@
 import connectDB from "@/lib/mongodb";
 import Project from "@/models/projectModel";
+import mongoose from "mongoose";
 
 export default async function handler(req, res) {
   await connectDB();
+
   const { id } = req.query;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: "ID tidak valid" });
+  }
 
   if (req.method === "GET") {
     try {
@@ -12,7 +18,7 @@ export default async function handler(req, res) {
 
       return res.status(200).json({ project });
     } catch (error) {
-      return res.status(500).json({ error: "Gagal mengambil project" });
+      return res.status(500).json({ error: "Gagal mengambil data proyek" });
     }
   }
 
