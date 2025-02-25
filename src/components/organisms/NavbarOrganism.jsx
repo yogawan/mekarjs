@@ -11,11 +11,8 @@ const NavbarOrganism = () => {
   };
 
   const menuItems = [
-    { label: "Home", path: "/", icon: "" },
-    { label: "Certificate", path: "/", icon: "" },
-    { label: "Google", path: "/", icon: "material-symbols:arrow-forward" },
-    { label: "GitHub", path: "/", icon: "material-symbols:arrow-forward" },
-    { label: "Linkedin", path: "/", icon: "material-symbols:arrow-forward" },
+    { label: "Beranda", path: "/", icon: "" },
+    { label: "TanyaAI", path: "/", icon: "material-symbols:arrow-forward" },
   ];
 
   return (
@@ -74,6 +71,7 @@ const NavbarOrganism = () => {
         </button>
 
         <ul className="space-y-[-12px] text-center">
+          <ProtectedImageAtom src="/favicon/F2.png" alt="logo" className="w-[128px] mb-10" />
           {menuItems.map((item, index) => (
             <li
               key={index}
@@ -82,7 +80,7 @@ const NavbarOrganism = () => {
               <Icon icon={item.icon} width="64" height="64" />
               <Link
                 href={item.path}
-                className="font-inter ml-2 text-6xl xl:text-[96px] m-3 font-thin transition-transform transform hover:scale-110"
+                className="font-inter ml-2 text-6xl xl:text-[64px] m-3 font-thin transition-transform transform hover:scale-110"
                 onClick={toggleMenu}
               >
                 {item.label}

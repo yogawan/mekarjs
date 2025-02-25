@@ -57,7 +57,7 @@ const FooterOrganism = () => {
                 {section.links.map((link, linkIndex) => (
                   <li key={linkIndex} className="flex justify-between items-center pb-3 mb-3 border-b border-black/15 xl:border-none text-black/50 hover:text-black transition-colors">
                     <a href={link.href}>{link.label}</a>
-                    <Icon icon="tdesign:user-business-filled" width="18" height="18" className="ml-3 text-black" />
+                    <Icon icon="ri:arrow-right-up-line" width="18" height="18" className="ml-3 text-black" />
                   </li>
                 ))}
               </ul>

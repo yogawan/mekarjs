@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 
 const HeroOrganism = () => {
     return (
-        <div className="mt-[128px] mb-10 text-center">
+        <div className="mt-[96px] mb-5 text-center">
 
           {/* Logo */}
           <div className="flex justify-center mb-5">
@@ -27,16 +27,16 @@ const HeroOrganism = () => {
           </h1>
 
           {/* Sub Headline */}
-          <p className="mb-5 text-center text-black/75 text-xl">~ Kami adalah <u>Stone Crusher</u> Terbaik di Kabupaten Klaten</p>
+          <p className="mb-5 text-center text-black/50 text-xl">~ Kami adalah <u>Stone Crusher</u> Terbaik di Kabupaten Klaten</p>
 
           {/* Button Call to Action */}
           <div className="flex flex-wrap justify-center">
             <div className="flex justify-between p-5 bg-primary text-black w-full sm:w-fit rounded-full m-2">
-              <a href="" className="text-xl text-black font-light">Pelajari Selengkapnya</a>
+              <a href="" className="text-xl text-black font-light">Produk Kami</a>
               <Icon icon="lucide:arrow-up-right" width="24" height="24" />
             </div>
             <div className="flex justify-between p-5 border border-black/15 text-black w-full sm:w-fit rounded-full m-2">
-              <a href="" className="text-xl text-black font-light">Pelajari Selengkapnya</a>
+              <a href="" className="text-xl text-black font-light">Tanya AI</a>
               <Icon icon="lucide:arrow-up-right" width="24" height="24" />
             </div>
           </div>
