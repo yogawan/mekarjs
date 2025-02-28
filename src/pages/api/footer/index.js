@@ -5,145 +5,103 @@ export default function handler(req, res) {
         "title": "PT. Mekar Jaya Sejahtera",
         "links": [
           {
-            "label": "Who I Am",
+            "label": "Tentang Kami",
             "href": "#about"
           },
           {
-            "label": "Career Path",
+            "label": "Visi & Misi",
+            "href": "#vision-mission"
+          },
+          {
+            "label": "Karier",
             "href": "#career"
           },
           {
-            "label": "Mission & Vision",
-            "href": "#mission-vision"
-          },
-          {
-            "label": "Testimonials",
-            "href": "#testimonials"
+            "label": "Hubungi Kami",
+            "href": "#contact"
           }
         ]
       },
       {
-        "title": "Experience",
+        "title": "Layanan Kami",
         "links": [
           {
-            "label": "Graphic Design",
-            "href": "#graphic-design"
+            "label": "Penggilingan Batu",
+            "href": "#stone-crushing"
           },
           {
-            "label": "UI/UX Design",
-            "href": "#ui-ux"
+            "label": "Pasokan Material",
+            "href": "#material-supply"
           },
           {
-            "label": "Web Development",
-            "href": "#web-dev"
+            "label": "Konstruksi & Infrastruktur",
+            "href": "#construction"
           },
           {
-            "label": "Mobile Development",
-            "href": "#mobile-dev"
-          },
-          {
-            "label": "Project Management",
-            "href": "#project-management"
+            "label": "Layanan Logistik",
+            "href": "#logistics"
           }
         ]
       },
       {
-        "title": "Skills",
+        "title": "Produk",
         "links": [
           {
-            "label": "Frontend Development",
-            "href": "#frontend"
+            "label": "Batu Split",
+            "href": "#batu-split"
           },
           {
-            "label": "Backend Development",
-            "href": "#backend"
+            "label": "Abu Batu",
+            "href": "#abu-batu"
           },
           {
-            "label": "UI/UX Design",
-            "href": "#uiux"
+            "label": "Sirtu",
+            "href": "#sirtu"
           },
           {
-            "label": "DevOps",
-            "href": "#devops"
+            "label": "Screening",
+            "href": "#screening"
           }
         ]
       },
       {
-        "title": "Projects",
+        "title": "Industri & Partner",
         "links": [
           {
-            "label": "Portfolio Website",
-            "href": "#portfolio"
+            "label": "Proyek Infrastruktur",
+            "href": "#infra-projects"
           },
           {
-            "label": "E-Commerce Platform",
-            "href": "#ecommerce"
+            "label": "Kontraktor",
+            "href": "#contractors"
           },
           {
-            "label": "Budget Tracker App",
-            "href": "#budget-tracker"
+            "label": "Developer",
+            "href": "#developers"
           },
           {
-            "label": "Social Media App",
-            "href": "#social-media"
-          },
-          {
-            "label": "Task Management Tool",
-            "href": "#task-management"
+            "label": "Supplier Material",
+            "href": "#suppliers"
           }
         ]
       },
       {
-        "title": "Services",
-        "links": [
-          {
-            "label": "Web Development",
-            "href": "#web-dev-service"
-          },
-          {
-            "label": "UI/UX Design",
-            "href": "#uiux-service"
-          },
-          {
-            "label": "Mobile App Development",
-            "href": "#mobile-service"
-          },
-          {
-            "label": "SEO Optimization",
-            "href": "#seo"
-          },
-          {
-            "label": "Consulting",
-            "href": "#consulting"
-          }
-        ]
-      },
-      {
-        "title": "Social",
+        "title": "Sosial Media",
         "links": [
           {
             "label": "LinkedIn",
-            "href": "https://linkedin.com/in/yogawan"
-          },
-          {
-            "label": "GitHub",
-            "href": "https://github.com/yogawan"
-          },
-          {
-            "label": "Twitter",
-            "href": "https://twitter.com/yogawan"
+            "href": "https://linkedin.com/company/mekarjayasejahtera"
           },
           {
             "label": "Instagram",
-            "href": "https://instagram.com/yogawan"
+            "href": "https://instagram.com/mekarjayasejahtera"
           },
           {
             "label": "Facebook",
-            "href": "https://facebook.com/yogawan"
+            "href": "https://facebook.com/mekarjayasejahtera"
           }
         ]
       }
     ]
-
   });
 }

@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 
 const HeroOrganism = () => {
     return (
-        <div className="mt-[96px] mb-5 text-center">
+        <div className="mb-5 text-center">
 
           {/* Logo */}
           <div className="flex justify-center mb-5">
@@ -27,7 +27,24 @@ const HeroOrganism = () => {
           </h1>
 
           {/* Sub Headline */}
-          <p className="mb-5 text-center text-black/50 text-xl">~ Kami adalah <u>Stone Crusher</u> Terbaik di Kabupaten Klaten</p>
+          <p className="mb-3 text-center text-black/50 text-xl">~ Kami adalah <u>Stone Crusher</u> Terbaik di <u>Kabupaten Klaten</u></p>
+
+          <div className="mb-2 flex justify-center">
+            <div className="flex item-center">
+              <Icon icon="mdi:location" width="16" height="16" className="mr-1 text-black" />
+              <a className="text-black text-xs" href="https://maps.app.goo.gl/dHvLqaSS1iWpCG986">MekarJS Cabang 1</a>
+            </div>
+            <div className="border border-black/15 ml-3 mr-2"></div>
+            <div className="flex item-center">
+              <Icon icon="mdi:location" width="16" height="16" className="mr-1 text-black" />
+              <a className="text-black text-xs" href="https://maps.app.goo.gl/bmGK3rAyWBb4j1LY6">Cabang 2</a>
+            </div>
+            <div className="border border-black/15 ml-3 mr-2"></div>
+            <div className="flex item-center">
+              <Icon icon="mdi:location" width="16" height="16" className="mr-1 text-black" />
+              <a className="text-black text-xs" href="https://maps.app.goo.gl/Eebon24dMnsKvCfK9">Cabang 3</a>
+            </div>
+          </div>
 
           {/* Button Call to Action */}
           <div className="flex flex-wrap justify-center">

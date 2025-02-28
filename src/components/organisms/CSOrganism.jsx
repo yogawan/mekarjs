@@ -116,7 +116,7 @@ const CSOrganism = () => {
             <Icon icon="fluent:bot-sparkle-48-filled" width="96" height="96" className="text-primary mb-5" />
             <p className="mb-3 text-black text-left text-3xl font-medium">~ Customer Service</p>
             {/* <p className="text-xl font-thin text-white/75"><u><a href="https://github.com/yogawan/jawiraiv1.6.3">Open Source</a></u> <i className="text-white">User Interface</i> to interact with AI Model.</p> */}
-            <p className="text-xl text-black/50">Ask Anything ~ Tanya apa saja tentang MekarJS, saya adalah asisten AI berbasis LLM dari Meta yang di modifikasi oleh Yogawan. Saya siap membantu anda.</p>
+            <p className="text-xl text-black/50">Ask Anything ~ Tanya apa saja tentang MekarJS.</p>
           </div>
 
           {/* Form */}
@@ -138,8 +138,8 @@ const CSOrganism = () => {
                 onClick={handleSend}
                 className={`p-5 w-[64px] font-semibold rounded-full transition ${
                   isLoading
-                    ? "bg-primary text-white cursor-not-allowed"
-                    : "bg-primary text-white"
+                    ? "bg-primary text-black cursor-not-allowed"
+                    : "bg-primary text-black"
                 }`}
                 disabled={isLoading}
               >
@@ -153,7 +153,7 @@ const CSOrganism = () => {
           <div className="flex-col">
             {chatHistory.length === 0 ? (
               <div className="mt-5">
-                <p className="text-xl text-center p-1 font-light leading-[120%] text-black/50">Jika ada pesan yang tidak sepantasnya, silahkan lapor disini <u><a href="https://github.com/yogawan/jawiraiv1.6.3">disini</a></u></p>
+                <p className="text-xl text-left pl-5 font-light leading-[120%] text-black/50">Jika ada pesan yang tidak sepantasnya, silahkan lapor disini <u><a href="https://github.com/yogawan/jawiraiv1.6.3">disini</a></u></p>
               </div>
             ) : (
               chatHistory.map((message, index) => (
@@ -196,10 +196,10 @@ const CSOrganism = () => {
           </div>
         </div>
 
-        <div className="flex justify-center p-5">
+        <div className="flex justify-start p-5">
           <button
             onClick={handleClearHistory}
-            className="px-6 py-3 bg-primary text-white rounded-full"
+            className="px-6 py-3 bg-primary text-black rounded-full"
           >
             Clear History
           </button>

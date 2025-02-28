@@ -68,7 +68,7 @@ const FooterOrganism = () => {
         {/* Bottom */}
         <div className="mt-8 border-t border-black/15 pt-4 text-center text-sm">
           <p className="text-black/50">
-            &copy; {new Date().getFullYear()} Your Name. All Rights Reserved.
+            &copy; {new Date().getFullYear()} Yogawan Office Familly. All Rights Reserved.
           </p>
         </div>
       </div>

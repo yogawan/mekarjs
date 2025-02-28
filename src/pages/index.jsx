@@ -4,7 +4,7 @@ import HeroOrganism from "@/components/organisms/HeroOrganism";
 import FooterOrganism from "@/components/organisms/FooterOrganism";
 import CompanyOrganism from "@/components/organisms/CompanyOrganism";
 import CSOrganism from "@/components/organisms/CSOrganism";
-import LocationCardOrganism from "@/components/organisms/LocationCardOrganism";
+// import LocationCardOrganism from "@/components/organisms/LocationCardOrganism";
 import GalleryOrganism from "@/components/organisms/GalleryOrganism";
 
 export default function Home() {
@@ -15,10 +15,10 @@ export default function Home() {
       </Head>
       <div>
         <NavbarOrganism></NavbarOrganism>
+        <GalleryOrganism></GalleryOrganism>
         <HeroOrganism></HeroOrganism>
         <CompanyOrganism></CompanyOrganism>
-        <GalleryOrganism></GalleryOrganism>
-        <LocationCardOrganism></LocationCardOrganism>
+        {/* <LocationCardOrganism></LocationCardOrganism> */}
         <CSOrganism></CSOrganism>
         <FooterOrganism></FooterOrganism>
       </div>

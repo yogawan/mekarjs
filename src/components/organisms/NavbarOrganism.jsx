@@ -16,7 +16,7 @@ const NavbarOrganism = () => {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 w-full bg-background backdrop-blur border-b border-black/10 z-50">
+    <nav className="fixed top-0 left-0 right-0 w-full bg-background/5 backdrop-blur border-b border-black/10 z-50">
       <div className="w-full px-4 py-4 flex items-center justify-between">
         
         <div className="flex items-center text-lg font-inter font-bold italic underline text-black">
