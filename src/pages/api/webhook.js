@@ -1,6 +1,6 @@
 import connectDB from "../../lib/mongodb";
 import Invoice from "../../models/invoiceModel";
-import Order from "../../models/ordersMaterial"; // ✅ Import model Order untuk mencari id_pengguna
+import Order from "../../models/ordersMaterial"; // Pastikan model Order diimport
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -8,17 +8,22 @@ export default async function handler(req, res) {
   }
 
   try {
-    await connectDB();
+    await connectDB(); // Pastikan koneksi database berhasil
     const data = req.body;
 
-    // 🔥 Ambil ID pengguna dari Order berdasarkan order_id
+    console.log("✅ Data diterima dari Midtrans:", data);
+
+    // 🔥 Cari order berdasarkan order_id yang diterima
     const order = await Order.findOne({ order_id: data.order_id });
 
     if (!order) {
+      console.log("🚨 Order tidak ditemukan untuk order_id:", data.order_id);
       return res.status(404).json({ success: false, message: "Order tidak ditemukan" });
     }
 
-    const id_pengguna = order.id_pengguna; // ✅ Ambil id_pengguna dari Order
+    console.log("✅ Order ditemukan:", order);
+
+    const id_pengguna = order.id_pengguna; // Ambil id_pengguna dari order
 
     // 🔍 Cek apakah invoice sudah ada
     let invoice = await Invoice.findOne({ order_id: data.order_id });
@@ -30,7 +35,7 @@ export default async function handler(req, res) {
       invoice.fraud_status = data.fraud_status;
 
       await invoice.save();
-      console.log("Invoice diperbarui:", invoice);
+      console.log("✅ Invoice diperbarui:", invoice);
 
       return res.status(200).json({ success: true, message: "Status pembayaran diperbarui" });
     }
@@ -53,11 +58,11 @@ export default async function handler(req, res) {
     });
 
     await invoice.save();
-    console.log("Invoice berhasil disimpan!", invoice);
+    console.log("✅ Invoice baru disimpan:", invoice);
 
     return res.status(200).json({ success: true, message: "Webhook diterima dan invoice disimpan" });
   } catch (error) {
-    console.error("Error di webhook:", error);
+    console.error("🚨 Error di webhook:", error);
     return res.status(500).json({ success: false, message: "Internal Server Error", error: error.message });
   }
 }
