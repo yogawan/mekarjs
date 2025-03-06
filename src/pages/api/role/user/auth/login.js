@@ -1,5 +1,5 @@
-import connectDB from "../../../lib/mongodb";
-import User from "../../../models/userModel";
+import connectDB from "../../../../../lib/mongodb";
+import User from "../../../../../models/userModel";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 

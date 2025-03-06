@@ -1,5 +1,5 @@
-import connectDB from "../../../lib/mongodb"
-import Material from "../../../models/materialModel";
+import connectDB from "../../../../../lib/mongodb"
+import Material from "../../../../../models/materialModel";
 
 export default async function handler(req, res) {
   await connectDB();
