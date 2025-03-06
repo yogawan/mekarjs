@@ -2,7 +2,7 @@ import connectDB from "../../../../../lib/mongodb";
 import Order from "../../../../../models/orderModel";
 import crypto from "crypto";
 
-export default async function handler(req, res) {
+async function handler(req, res) {
   await connectDB();
 
   if (req.method !== "POST") {
@@ -11,15 +11,16 @@ export default async function handler(req, res) {
 
   try {
     const {
+      order_id,
       transaction_status,
       transaction_id,
-      order_id,
-      payment_type,
+      settlement_time,
+      signature_key,
       gross_amount,
-      va_numbers,
-      signature_key
+      payment_type
     } = req.body;
 
+    // 🔹 Validasi Signature Key
     const serverKey = process.env.MIDTRANS_SERVER_KEY;
     const expectedSignature = crypto
       .createHash("sha512")
@@ -27,34 +28,43 @@ export default async function handler(req, res) {
       .digest("hex");
 
     if (signature_key !== expectedSignature) {
-      return res.status(401).json({ success: false, message: "Signature tidak valid" });
+      return res.status(403).json({ success: false, message: "Signature tidak valid" });
     }
 
+    // 🔹 Cari order berdasarkan order_id
     const order = await Order.findOne({ order_id });
     if (!order) {
       return res.status(404).json({ success: false, message: "Pesanan tidak ditemukan" });
     }
 
+    // 🔹 Update status pembayaran berdasarkan status dari Midtrans
+    let statusPesanan = order.status;
+
     if (transaction_status === "settlement") {
-      order.status = "lunas";
-      order.settlement_time = new Date();
+      statusPesanan = "lunas";
     } else if (transaction_status === "pending") {
-      order.status = "menunggu";
-    } else if (transaction_status === "expire") {
-      order.status = "kedaluwarsa";
-    } else if (transaction_status === "cancel" || transaction_status === "deny") {
-      order.status = "dibatalkan";
+      statusPesanan = "menunggu";
+    } else if (transaction_status === "deny" || transaction_status === "expire" || transaction_status === "cancel") {
+      statusPesanan = "gagal";
     }
 
+    // 🔹 Simpan perubahan ke database
+    order.status = statusPesanan;
     order.transaction_id = transaction_id;
+    order.settlement_time = settlement_time || null;
     order.payment_type = payment_type;
-    order.bank = va_numbers?.[0]?.bank || null;
-    order.va_number = va_numbers?.[0]?.va_number || null;
     await order.save();
 
-    res.status(200).json({ success: true, message: "Status pesanan diperbarui", data: order });
+    res.status(200).json({
+      success: true,
+      message: "Notifikasi pembayaran berhasil diproses",
+      data: order
+    });
+
   } catch (error) {
-    console.error("🚨 Error saat menerima callback Midtrans:", error);
+    console.error("Error saat memproses notifikasi Midtrans:", error);
     res.status(500).json({ success: false, message: "Terjadi kesalahan", error: error.message });
   }
 }
+
+export default handler;

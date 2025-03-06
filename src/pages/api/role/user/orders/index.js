@@ -1,3 +1,4 @@
+import axios from "axios";
 import connectDB from "../../../../../lib/mongodb";
 import Material from "../../../../../models/materialModel";
 import Order from "../../../../../models/orderModel";
@@ -37,14 +38,11 @@ async function handler(req, res) {
     const order_id = `order-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
     const midtransServerKey = Buffer.from(`${process.env.MIDTRANS_SERVER_KEY}:`).toString("base64");
 
-    const midtransResponse = await fetch("https://api.sandbox.midtrans.com/v1/payment-links", {
-      method: "POST",
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-        "Authorization": `Basic ${midtransServerKey}`
-      },
-      body: JSON.stringify({
+    // Request ke Midtrans menggunakan Axios
+    const midtransResponse = await axios.post(
+      "https://api.sandbox.midtrans.com/v2/charge",
+      {
+        payment_type: "gopay", // Bisa diganti dengan metode lain (bank_transfer, qris, dll.)
         transaction_details: {
           order_id,
           gross_amount: total_harga
@@ -60,17 +58,28 @@ async function handler(req, res) {
         customer_details: {
           first_name: user.nama,
           email: user.email
+        },
+        metadata: {
+          id_pengguna
         }
-      })
-    });
+      },
+      {
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "Authorization": `Basic ${midtransServerKey}`
+        }
+      }
+    );
 
-    const paymentData = await midtransResponse.json();
+    const paymentData = midtransResponse.data;
 
-    if (!paymentData.payment_url) {
+    if (!paymentData.redirect_url) {
       console.error("Gagal mendapatkan Payment Link dari Midtrans:", paymentData);
       return res.status(400).json({ success: false, message: "Gagal mendapatkan tautan pembayaran" });
     }
 
+    // Simpan order ke database
     const newOrder = new Order({
       order_id,
       id_pengguna,
@@ -80,7 +89,7 @@ async function handler(req, res) {
       transaction_id: paymentData.transaction_id,
       payment_type: paymentData.payment_type,
       status: "menunggu",
-      tautan_bayar: paymentData.payment_url
+      tautan_bayar: paymentData.redirect_url
     });
 
     await newOrder.save();
