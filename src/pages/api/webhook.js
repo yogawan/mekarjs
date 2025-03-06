@@ -1,6 +1,6 @@
-import connectDB from "../../../lib/mongodb";
-import Order from "../../../models/orderModel";
-import TransactionLog from "../../../models/transactionLogsModel";
+import connectDB from "../../lib/mongodb";
+import Order from "../../models/orderModel";
+import TransactionLog from "../../models/transactionLogsModel";
 import crypto from "crypto";
 
 async function handler(req, res) {
