@@ -1,24 +1,30 @@
-// import connectDB from "../../../lib/mongodb";
-// import Order from "../../../models/ordersMaterial";
-// import checkAuth from "../../../middleware/auth"
+import connectDB from "../../../lib/mongodb";
+import Order from "../../../models/ordersMaterial";
+import { verifyToken } from "../../../middleware/auth";
 
-// export default checkAuth(async (req, res) => {
-//   await connectDB();
+async function handler(req, res) {
+  await connectDB();
 
-//   if (req.method !== "GET") {
-//     return res.status(405).json({ success: false, message: "Metode tidak diizinkan" });
-//   }
+  if (req.method !== "GET") {
+    return res.status(405).json({ success: false, message: "Metode tidak diizinkan" });
+  }
 
-//   try {
-//     const userId = req.user.id; // Ambil ID pengguna dari token JWT
-//     const orders = await Order.find({ id_pengguna: userId }).populate("id_material");
+  try {
+    const id_pengguna = req.user.id; // 🔥 Ambil ID pengguna dari token JWT
 
-//     if (!orders.length) {
-//       return res.status(404).json({ success: false, message: "Pesanan tidak ditemukan" });
-//     }
+    // Cari semua pesanan milik pengguna yang login
+    const orders = await Order.find({ id_pengguna }).populate("id_material", "nama harga_per_ton");
 
-//     return res.status(200).json({ success: true, orders });
-//   } catch (error) {
-//     return res.status(500).json({ success: false, message: "Terjadi kesalahan server" });
-//   }
-// });
+    res.status(200).json({
+      success: true,
+      message: "Daftar pesanan ditemukan",
+      data: orders
+    });
+
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Terjadi kesalahan", error: error.message });
+  }
+}
+
+// 🔥 Gunakan middleware JWT untuk mengambil ID pengguna dari token
+export default verifyToken(handler);

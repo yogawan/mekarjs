@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import materialsModel from "./materialsModel";
 
 const OrderSchema = new mongoose.Schema(
   {
