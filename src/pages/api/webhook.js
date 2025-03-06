@@ -1,5 +1,6 @@
 import connectDB from "../../lib/mongodb";
 import Invoice from "../../models/invoiceModel";
+import Order from "../../models/ordersMaterial"; // ✅ Import model Order untuk mencari id_pengguna
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -7,21 +8,23 @@ export default async function handler(req, res) {
   }
 
   try {
-    await connectDB(); // Koneksi ke database
+    await connectDB();
     const data = req.body;
 
-    // 🔥 Ambil ID pengguna dari metadata (jika tersedia)
-    const id_pengguna = data.metadata?.user_id || null;
+    // 🔥 Ambil ID pengguna dari Order berdasarkan order_id
+    const order = await Order.findOne({ order_id: data.order_id });
 
-    if (!id_pengguna) {
-      return res.status(400).json({ success: false, message: "ID pengguna tidak ditemukan dalam metadata" });
+    if (!order) {
+      return res.status(404).json({ success: false, message: "Order tidak ditemukan" });
     }
 
-    // Cek apakah invoice sudah ada
+    const id_pengguna = order.id_pengguna; // ✅ Ambil id_pengguna dari Order
+
+    // 🔍 Cek apakah invoice sudah ada
     let invoice = await Invoice.findOne({ order_id: data.order_id });
 
     if (invoice) {
-      // Jika invoice sudah ada, update statusnya
+      // ✅ Jika invoice sudah ada, update statusnya
       invoice.transaction_status = data.transaction_status;
       invoice.settlement_time = data.settlement_time ? new Date(data.settlement_time) : invoice.settlement_time;
       invoice.fraud_status = data.fraud_status;
@@ -32,7 +35,7 @@ export default async function handler(req, res) {
       return res.status(200).json({ success: true, message: "Status pembayaran diperbarui" });
     }
 
-    // Jika invoice belum ada, buat baru
+    // ✅ Jika invoice belum ada, buat baru
     invoice = new Invoice({
       id_pengguna, // ✅ Simpan ID Pengguna
       order_id: data.order_id,
