@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import materialsModel from "./materialsModel";
 
 const OrderSchema = new mongoose.Schema(
   {
@@ -7,7 +6,6 @@ const OrderSchema = new mongoose.Schema(
     id_material: { type: mongoose.Schema.Types.ObjectId, ref: "Material", required: true },
     jumlah: { type: Number, required: true },
     total_harga: { type: Number, required: true },
-    status: { type: String, enum: ["menunggu", "dibayar", "selesai"], default: "menunggu" },
     tautan_bayar: { type: String, required: false },
     sudah_diambil: { type: Boolean, default: false },
   },

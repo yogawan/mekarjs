@@ -2,20 +2,21 @@ import mongoose from "mongoose";
 
 const InvoiceSchema = new mongoose.Schema(
   {
-    order_id: { type: String, required: true, unique: true }, // ID Order dari Midtrans
-    transaction_id: { type: String, required: true }, // ID Transaksi dari Midtrans
-    transaction_status: { type: String, required: true }, // Status pembayaran (settlement, pending, dll)
-    transaction_time: { type: Date, required: true }, // Waktu transaksi
-    settlement_time: { type: Date }, // Waktu penyelesaian pembayaran
-    payment_type: { type: String, required: true }, // Metode pembayaran (bank_transfer, gopay, dll)
-    va_number: { type: String }, // Virtual Account (jika pembayaran bank transfer)
-    bank: { type: String }, // Nama bank (jika bank transfer)
-    gross_amount: { type: Number, required: true }, // Total jumlah pembayaran
-    currency: { type: String, required: true }, // Mata uang (IDR)
-    fraud_status: { type: String, required: true }, // Status fraud (accept, deny, challenge)
-    expiry_time: { type: Date }, // Waktu kadaluarsa pembayaran
+    id_pengguna: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, // ✅ Tambahkan ID Pengguna
+    order_id: { type: String, required: true, unique: true },
+    transaction_id: { type: String, required: true },
+    transaction_status: { type: String, required: true },
+    transaction_time: { type: Date, required: true },
+    settlement_time: { type: Date, default: null },
+    payment_type: { type: String, required: true },
+    va_number: { type: String, default: null },
+    bank: { type: String, default: null },
+    gross_amount: { type: Number, required: true },
+    currency: { type: String, required: true },
+    fraud_status: { type: String, required: true },
+    expiry_time: { type: Date, required: true },
   },
-  { timestamps: true } // Auto generate createdAt dan updatedAt
+  { timestamps: true }
 );
 
 export default mongoose.models.Invoice || mongoose.model("Invoice", InvoiceSchema);

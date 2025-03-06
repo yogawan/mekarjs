@@ -10,6 +10,13 @@ export default async function handler(req, res) {
     await connectDB(); // Koneksi ke database
     const data = req.body;
 
+    // 🔥 Ambil ID pengguna dari metadata (jika tersedia)
+    const id_pengguna = data.metadata?.user_id || null;
+
+    if (!id_pengguna) {
+      return res.status(400).json({ success: false, message: "ID pengguna tidak ditemukan dalam metadata" });
+    }
+
     // Cek apakah invoice sudah ada
     let invoice = await Invoice.findOne({ order_id: data.order_id });
 
@@ -27,6 +34,7 @@ export default async function handler(req, res) {
 
     // Jika invoice belum ada, buat baru
     invoice = new Invoice({
+      id_pengguna, // ✅ Simpan ID Pengguna
       order_id: data.order_id,
       transaction_id: data.transaction_id,
       transaction_status: data.transaction_status,
@@ -42,7 +50,7 @@ export default async function handler(req, res) {
     });
 
     await invoice.save();
-    console.log("Invoice berhasil disimpan!");
+    console.log("Invoice berhasil disimpan!", invoice);
 
     return res.status(200).json({ success: true, message: "Webhook diterima dan invoice disimpan" });
   } catch (error) {
