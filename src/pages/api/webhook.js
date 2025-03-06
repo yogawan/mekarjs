@@ -1,5 +1,5 @@
 import connectDB from "../../lib/mongodb";
-import Order from "../../models/ordersMaterial";
+import Invoice from "../../models/invoiceModel";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -8,25 +8,34 @@ export default async function handler(req, res) {
 
   try {
     await connectDB(); // Koneksi ke database
+    const data = req.body;
 
-    const { transaction_status, order_id } = req.body; // Ambil data dari callback Midtrans
-
-    // Cek apakah order dengan order_id tersebut ada di database
-    const order = await Order.findOne({ _id: order_id });
-
-    if (!order) {
-      return res.status(404).json({ success: false, message: "Order tidak ditemukan" });
+    // Cek apakah order_id sudah ada di database
+    const existingInvoice = await Invoice.findOne({ order_id: data.order_id });
+    if (existingInvoice) {
+      return res.status(400).json({ success: false, message: "Invoice sudah ada" });
     }
 
-    // Update status order jika pembayaran berhasil
-    if (transaction_status === "settlement") {
-      order.status = "dibayar";
-      await order.save();
-      return res.status(200).json({ success: true, message: "Order diperbarui menjadi 'dibayar'" });
-    }
+    // Simpan invoice ke database
+    const invoice = new Invoice({
+      order_id: data.order_id,
+      transaction_id: data.transaction_id,
+      transaction_status: data.transaction_status,
+      transaction_time: new Date(data.transaction_time),
+      settlement_time: data.settlement_time ? new Date(data.settlement_time) : null,
+      payment_type: data.payment_type,
+      va_number: data.va_numbers?.[0]?.va_number || null,
+      bank: data.va_numbers?.[0]?.bank || null,
+      gross_amount: parseFloat(data.gross_amount),
+      currency: data.currency,
+      fraud_status: data.fraud_status,
+      expiry_time: new Date(data.expiry_time),
+    });
 
-    return res.status(200).json({ success: true, message: "Webhook diterima, tidak ada perubahan" });
+    await invoice.save();
+    console.log("Invoice berhasil disimpan!");
 
+    return res.status(200).json({ success: true, message: "Webhook diterima dan invoice disimpan" });
   } catch (error) {
     console.error("Error di webhook:", error);
     return res.status(500).json({ success: false, message: "Internal Server Error", error: error.message });
