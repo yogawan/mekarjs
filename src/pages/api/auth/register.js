@@ -1,5 +1,5 @@
 import connectDB from "../../../lib/mongodb";
-import User from "../../../models/usersModel";
+import User from "../../../models/userModel";
 import bcrypt from "bcryptjs";
 
 export default async function handler(req, res) {
@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   const { nama, email, kata_sandi, nomor_kendaraan } = req.body;
 
   if (!nama || !email || !kata_sandi) {
-    return res.status(400).json({ success: false, message: "Harap isi semua bidang yang diperlukan" });
+    return res.status(400).json({ success: false, message: "Harap isi semua field yang diperlukan" });
   }
 
   try {

@@ -9,7 +9,7 @@ export function verifyToken(handler) {
       }
 
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      req.user = decoded; // Simpan data user di req.user
+      req.user = decoded;
 
       return handler(req, res);
     } catch (error) {

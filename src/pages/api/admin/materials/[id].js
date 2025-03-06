@@ -1,5 +1,5 @@
 import connectDB from "../../../../lib/mongodb";
-import Material from "../../../../models/materialsModel";
+import Material from "../../../../models/materialModel";
 import { Types } from "mongoose";
 
 export default async function handler(req, res) {

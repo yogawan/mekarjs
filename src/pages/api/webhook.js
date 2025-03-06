@@ -1,68 +1,79 @@
-import connectDB from "../../lib/mongodb";
-import Invoice from "../../models/invoiceModel";
-import Order from "../../models/ordersMaterial"; // Pastikan model Order diimport
+import connectDB from "../../../lib/mongodb";
+import Order from "../../../models/orderModel";
+import TransactionLog from "../../../models/transactionLogsModel";
+import crypto from "crypto";
 
-export default async function handler(req, res) {
+async function handler(req, res) {
+  await connectDB();
+
   if (req.method !== "POST") {
-    return res.status(405).json({ success: false, message: "Method not allowed" });
+    return res.status(405).json({ success: false, message: "Metode tidak diizinkan" });
   }
 
   try {
-    await connectDB(); // Pastikan koneksi database berhasil
-    const data = req.body;
+    const {
+      order_id,
+      transaction_id,
+      transaction_status,
+      settlement_time,
+      payment_type,
+      va_numbers,
+      bank,
+      gross_amount,
+      fraud_status,
+      currency,
+      expiry_time,
+      signature_key
+    } = req.body;
 
-    console.log("✅ Data diterima dari Midtrans:", data);
+    const serverKey = process.env.MIDTRANS_SERVER_KEY;
+    const expectedSignature = crypto
+      .createHash("sha512")
+      .update(`${order_id}${transaction_status}${gross_amount}${serverKey}`)
+      .digest("hex");
 
-    // 🔥 Cari order berdasarkan order_id yang diterima
-    const order = await Order.findOne({ order_id: data.order_id });
-
-    if (!order) {
-      console.log("🚨 Order tidak ditemukan untuk order_id:", data.order_id);
-      return res.status(404).json({ success: false, message: "Order tidak ditemukan" });
+    if (signature_key !== expectedSignature) {
+      return res.status(403).json({ success: false, message: "Signature tidak valid" });
     }
 
-    console.log("✅ Order ditemukan:", order);
-
-    const id_pengguna = order.id_pengguna; // Ambil id_pengguna dari order
-
-    // 🔍 Cek apakah invoice sudah ada
-    let invoice = await Invoice.findOne({ order_id: data.order_id });
-
-    if (invoice) {
-      // ✅ Jika invoice sudah ada, update statusnya
-      invoice.transaction_status = data.transaction_status;
-      invoice.settlement_time = data.settlement_time ? new Date(data.settlement_time) : invoice.settlement_time;
-      invoice.fraud_status = data.fraud_status;
-
-      await invoice.save();
-      console.log("✅ Invoice diperbarui:", invoice);
-
-      return res.status(200).json({ success: true, message: "Status pembayaran diperbarui" });
-    }
-
-    // ✅ Jika invoice belum ada, buat baru
-    invoice = new Invoice({
-      id_pengguna, // ✅ Simpan ID Pengguna
-      order_id: data.order_id,
-      transaction_id: data.transaction_id,
-      transaction_status: data.transaction_status,
-      transaction_time: new Date(data.transaction_time),
-      settlement_time: data.settlement_time ? new Date(data.settlement_time) : null,
-      payment_type: data.payment_type,
-      va_number: data.va_numbers?.[0]?.va_number || null,
-      bank: data.va_numbers?.[0]?.bank || null,
-      gross_amount: parseFloat(data.gross_amount),
-      currency: data.currency,
-      fraud_status: data.fraud_status,
-      expiry_time: new Date(data.expiry_time),
+    // Simpan callback ke database
+    const newLog = new TransactionLog({
+      order_id,
+      transaction_id,
+      transaction_status,
+      settlement_time,
+      payment_type,
+      va_number: va_numbers?.[0]?.va_number || null,
+      bank,
+      gross_amount: parseFloat(gross_amount),
+      currency,
+      fraud_status,
+      expiry_time,
+      raw_callback: req.body // Simpan semua data asli dari Midtrans
     });
 
-    await invoice.save();
-    console.log("✅ Invoice baru disimpan:", invoice);
+    await newLog.save();
 
-    return res.status(200).json({ success: true, message: "Webhook diterima dan invoice disimpan" });
+    // Update pesanan jika ditemukan
+    const order = await Order.findOne({ order_id });
+    if (order) {
+      if (transaction_status === "settlement") {
+        order.status = "dibayar";
+        order.settlement_time = settlement_time;
+      } else if (["cancel", "deny", "expire"].includes(transaction_status)) {
+        order.status = "gagal";
+      } else if (transaction_status === "pending") {
+        order.status = "menunggu";
+      }
+
+      await order.save();
+    }
+
+    res.status(200).json({ success: true, message: "Callback berhasil diproses" });
+
   } catch (error) {
-    console.error("🚨 Error di webhook:", error);
-    return res.status(500).json({ success: false, message: "Internal Server Error", error: error.message });
+    res.status(500).json({ success: false, message: "Terjadi kesalahan", error: error.message });
   }
 }
+
+export default handler;

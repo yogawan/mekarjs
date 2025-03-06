@@ -1,5 +1,5 @@
 import connectDB from "../../../lib/mongodb";
-import User from "../../../models/usersModel";
+import User from "../../../models/userModel";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
@@ -13,7 +13,7 @@ export default async function handler(req, res) {
   const { email, kata_sandi } = req.body;
 
   if (!email || !kata_sandi) {
-    return res.status(400).json({ success: false, message: "Harap isi semua bidang yang diperlukan" });
+    return res.status(400).json({ success: false, message: "Harap isi semua field yang diperlukan" });
   }
 
   try {
@@ -30,7 +30,7 @@ export default async function handler(req, res) {
     const token = jwt.sign(
       { id: user._id, email: user.email },
       process.env.JWT_SECRET,
-      { expiresIn: "7d" } // Token berlaku selama 7 hari
+      { expiresIn: "7d" }
     );
 
     res.status(200).json({ success: true, message: "Login berhasil", token });
