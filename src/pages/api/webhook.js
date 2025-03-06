@@ -10,14 +10,23 @@ export default async function handler(req, res) {
     await connectDB(); // Koneksi ke database
     const data = req.body;
 
-    // Cek apakah order_id sudah ada di database
-    const existingInvoice = await Invoice.findOne({ order_id: data.order_id });
-    if (existingInvoice) {
-      return res.status(400).json({ success: false, message: "Invoice sudah ada" });
+    // Cek apakah invoice sudah ada
+    let invoice = await Invoice.findOne({ order_id: data.order_id });
+
+    if (invoice) {
+      // Jika invoice sudah ada, update statusnya
+      invoice.transaction_status = data.transaction_status;
+      invoice.settlement_time = data.settlement_time ? new Date(data.settlement_time) : invoice.settlement_time;
+      invoice.fraud_status = data.fraud_status;
+
+      await invoice.save();
+      console.log("Invoice diperbarui:", invoice);
+
+      return res.status(200).json({ success: true, message: "Status pembayaran diperbarui" });
     }
 
-    // Simpan invoice ke database
-    const invoice = new Invoice({
+    // Jika invoice belum ada, buat baru
+    invoice = new Invoice({
       order_id: data.order_id,
       transaction_id: data.transaction_id,
       transaction_status: data.transaction_status,
