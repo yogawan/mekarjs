@@ -1,6 +1,6 @@
 import connectDB from "../../../lib/mongodb";
 import Material from "../../../models/materialsModel";
-import Order from "../../../models/ordersModel";
+import Order from "../../../models/ordersMaterial";
 import { verifyToken } from "../../../middleware/auth";
 
 async function handler(req, res) {
