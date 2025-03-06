@@ -1,43 +1,34 @@
 import connectDB from "../../lib/mongodb";
 import Order from "../../models/ordersMaterial";
-import fs from "fs";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
-    return res.status(405).json({ success: false, message: "Method Not Allowed" });
+    return res.status(405).json({ success: false, message: "Method not allowed" });
   }
 
   try {
-    await connectDB();
+    await connectDB(); // Koneksi ke database
 
-    // Log request body untuk debugging
-    fs.appendFileSync("webhook-log.txt", JSON.stringify(req.body, null, 2) + "\n");
+    const { transaction_status, order_id } = req.body; // Ambil data dari callback Midtrans
 
-    const { order_id, transaction_status, status_code } = req.body;
+    // Cek apakah order dengan order_id tersebut ada di database
+    const order = await Order.findOne({ _id: order_id });
 
-    if (!order_id || !transaction_status) {
-      return res.status(400).json({ success: false, message: "Invalid payload" });
+    if (!order) {
+      return res.status(404).json({ success: false, message: "Order tidak ditemukan" });
     }
 
-    // Cek apakah status transaksi adalah "settlement" (dibayar)
-    if (transaction_status === "settlement" && status_code === "200") {
-      const order = await Order.findOne({ _id: order_id });
-
-      if (!order) {
-        return res.status(404).json({ success: false, message: "Order not found" });
-      }
-
+    // Update status order jika pembayaran berhasil
+    if (transaction_status === "settlement") {
       order.status = "dibayar";
       await order.save();
-
-      return res.status(200).json({ success: true, message: "Order updated successfully" });
+      return res.status(200).json({ success: true, message: "Order diperbarui menjadi 'dibayar'" });
     }
 
-    return res.status(200).json({ success: true, message: "Webhook received, no action taken" });
-  } catch (error) {
-    console.error("Webhook Error:", error);
-    fs.appendFileSync("webhook-error.txt", error.toString() + "\n");
+    return res.status(200).json({ success: true, message: "Webhook diterima, tidak ada perubahan" });
 
-    return res.status(500).json({ success: false, message: "Internal Server Error" });
+  } catch (error) {
+    console.error("Error di webhook:", error);
+    return res.status(500).json({ success: false, message: "Internal Server Error", error: error.message });
   }
 }
