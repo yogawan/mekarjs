@@ -1,5 +1,5 @@
-import connectDB from "../../../lib/mongodb";
-import Order from "../../../models/ordersModel";
+import connectDB from "../../lib/mongodb";
+import Order from "../../models/ordersMaterial";
 import fs from "fs";
 
 export default async function handler(req, res) {
