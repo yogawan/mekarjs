@@ -9,14 +9,6 @@ const OrderSchema = new mongoose.Schema(
     total_harga: { type: Number, required: true },
     tautan_bayar: { type: String, required: false },
     sudah_diambil: { type: Boolean, default: false },
-    transaction_status: { type: String, required: false },
-    payment_type: { type: String, required: false },
-    va_numbers: [
-      {
-        va_number: { type: String, required: false },
-        bank: { type: String, required: false },
-      }
-    ],
   },
   { timestamps: true }
 );

@@ -1,13 +1,13 @@
-import ChatAIOrganism from "@/components/organisms/ChatAIOrganism"
-import SidebarOrganism from "@/components/organisms/SidebarOrganism"
+import AssistantAI from "@/components/chat/AssistantAI";
+import SidebarOrganism from "@/components/company/Sidebar"
 
 const ChatAIPage = () => {
     return (
-        <div className="">
+        <div>
             <SidebarOrganism />
-            <div className="flex justify-center mt-5">
+            <div className="ml-[256px] pl-5 pt-5 flex justify-center">
                 <div className="w-[720px]">
-                    <ChatAIOrganism />
+                    <AssistantAI />
                 </div>
             </div>
         </div>

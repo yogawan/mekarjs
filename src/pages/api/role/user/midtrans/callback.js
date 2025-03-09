@@ -1,6 +1,8 @@
 import connectDB from "../../../../../lib/mongodb";
 import Order from "../../../../../models/orderModel";
-import crypto from "crypto";
+import nodemailer from "nodemailer";
+import { verifySignature } from "../../../../../middleware/verifySignature";
+import User from "../../../../../models/userModel";  // Pastikan Anda memiliki model User
 
 async function handler(req, res) {
   await connectDB();
@@ -9,60 +11,79 @@ async function handler(req, res) {
     return res.status(405).json({ success: false, message: "Metode tidak diizinkan" });
   }
 
+  const { signature_key, order_id, transaction_status, transaction_id, gross_amount, payment_type, va_numbers } = req.body;
+
+  // Verifikasi signature untuk keamanan
+  const isValidSignature = verifySignature(req.body);
+  if (!isValidSignature) {
+    return res.status(400).json({ success: false, message: "Signature tidak valid" });
+  }
+
   try {
-    const {
-      order_id,
-      transaction_status,
-      transaction_id,
-      settlement_time,
-      signature_key,
-      gross_amount,
-      payment_type
-    } = req.body;
-
-    // 🔹 Validasi Signature Key
-    const serverKey = process.env.MIDTRANS_SERVER_KEY;
-    const expectedSignature = crypto
-      .createHash("sha512")
-      .update(order_id + gross_amount + serverKey)
-      .digest("hex");
-
-    if (signature_key !== expectedSignature) {
-      return res.status(403).json({ success: false, message: "Signature tidak valid" });
-    }
-
-    // 🔹 Cari order berdasarkan order_id
     const order = await Order.findOne({ order_id });
+
     if (!order) {
-      return res.status(404).json({ success: false, message: "Pesanan tidak ditemukan" });
+      return res.status(404).json({ success: false, message: "Order tidak ditemukan" });
     }
 
-    // 🔹 Update status pembayaran berdasarkan status dari Midtrans
-    let statusPesanan = order.status;
-
-    if (transaction_status === "settlement") {
-      statusPesanan = "lunas";
-    } else if (transaction_status === "pending") {
-      statusPesanan = "menunggu";
-    } else if (transaction_status === "deny" || transaction_status === "expire" || transaction_status === "cancel") {
-      statusPesanan = "gagal";
+    // Cek apakah status transaksi sudah sama dengan yang ada di database
+    if (order.transaction_status === transaction_status) {
+      return res.status(200).json({ success: true, message: "Status transaksi sudah diperbarui sebelumnya" });
     }
 
-    // 🔹 Simpan perubahan ke database
-    order.status = statusPesanan;
+    // Update status order berdasarkan transaksi
+    if (transaction_status === "pending") {
+      order.status = "Pending";
+    } else if (transaction_status === "settlement") {
+      order.status = "Lunas";
+    } else if (transaction_status === "cancel") {
+      order.status = "Batal";
+    } else {
+      order.status = "Gagal";
+    }
+
+    // Simpan status terbaru
+    order.transaction_status = transaction_status;
     order.transaction_id = transaction_id;
-    order.settlement_time = settlement_time || null;
-    order.payment_type = payment_type;
     await order.save();
 
-    res.status(200).json({
-      success: true,
-      message: "Notifikasi pembayaran berhasil diproses",
-      data: order
-    });
+    // Kirim email invoice hanya jika status transaksi berubah menjadi settlement atau pending
+    if (transaction_status === "settlement" || transaction_status === "pending") {
+      const user = await User.findById(order.id_pengguna); // Ambil data pengguna berdasarkan ID
+      if (!user || !user.email) {
+        return res.status(404).json({ success: false, message: "Email pengguna tidak ditemukan" });
+      }
+
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.EMAIL_USER, // Alamat email pengirim
+          pass: process.env.EMAIL_PASS  // Password email pengirim
+        }
+      });
+
+      const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: user.email,
+        subject: `Invoice Pembayaran Order ID: ${order_id}`,
+        text: `Terima kasih telah melakukan pembayaran untuk pesanan Anda dengan ID: ${order_id}.\n
+        Status pembayaran: ${transaction_status}\n
+        Total Pembayaran: ${gross_amount}\n
+        Silakan melakukan konfirmasi lebih lanjut melalui link pembayaran: ${va_numbers[0]?.va_number}.`
+      };
+
+      try {
+        await transporter.sendMail(mailOptions);
+        console.log("Email berhasil dikirim");
+      } catch (error) {
+        console.error("Gagal mengirim email:", error);
+      }
+    }
+
+    res.status(200).json({ success: true, message: "Callback diterima dan diproses", data: order });
 
   } catch (error) {
-    console.error("Error saat memproses notifikasi Midtrans:", error);
+    console.error("Error saat memproses callback:", error);
     res.status(500).json({ success: false, message: "Terjadi kesalahan", error: error.message });
   }
 }

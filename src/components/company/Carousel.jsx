@@ -1,5 +1,5 @@
 import React from "react";
-import ProtectedImageAtom from "../atoms/ProtectedImageAtom";
+import ProtectedImageAtom from "../utilities/ProtectedImage";
 
 const companyLogos = [
   "/gallery/01.png",
@@ -8,7 +8,7 @@ const companyLogos = [
   "/gallery/04.png",
 ];
 
-const GalleryOrganism = () => {
+const Carousel = () => {
   return (
     <div className="mt-20 mb-5 relative w-full overflow-hidden bg-background py-4">
       <div className="flex w-max animate-scrolll gap-3 xl:gap-8">
@@ -20,4 +20,4 @@ const GalleryOrganism = () => {
   );
 };
 
-export default GalleryOrganism;
+export default Carousel;

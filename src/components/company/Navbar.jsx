@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Link from "next/link";
-import ProtectedImageAtom from "../atoms/ProtectedImageAtom";
+import ProtectedImageAtom from "../utilities/ProtectedImage";
 
-const NavbarOrganism = () => {
+const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -24,7 +24,7 @@ const NavbarOrganism = () => {
         </div>
 
         <div className="flex justify-between items-center">
-          <Link className="text-black px-6 py-3 mr-5 text-xs border border-black/15 rounded-full" href="/dashboard" target="_blank">Dashboard</Link>
+          <Link className="text-black px-6 py-3 mr-5 text-xs border border-black/15 rounded-full" href={"/overview"} >Dashboard</Link>
           <button
             className="relative w-10 h-10 flex items-center justify-center focus:outline-none"
             onClick={toggleMenu}
@@ -94,4 +94,4 @@ const NavbarOrganism = () => {
   );
 };
 
-export default NavbarOrganism;
+export default Navbar;

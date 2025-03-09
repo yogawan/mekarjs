@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import ProtectedImageAtom from "@/components/atoms/ProtectedImageAtom";
+import ProtectedImageAtom from "@/components/utilities/ProtectedImage";
 
 const branches = [
   {
@@ -46,7 +46,7 @@ const BranchCard = ({ name, mapLink }) => (
   </div>
 );
 
-const LocationCardOrganism = () => {
+const Location = () => {
   return (
     <div className="mt-5">
       <p className="mb-3 text-black text-center text-3xl font-medium">~ Cabang Kami</p>
@@ -59,4 +59,4 @@ const LocationCardOrganism = () => {
   );
 };
 
-export default LocationCardOrganism;
+export default Location;

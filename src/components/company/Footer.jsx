@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import ProtectedImageAtom from "../atoms/ProtectedImageAtom";
+import ProtectedImageAtom from "../utilities/ProtectedImage";
 
-const FooterOrganism = () => {
+const Footer = () => {
   const [footers, setFooters] = useState([]);
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState(null);
@@ -12,7 +12,7 @@ const FooterOrganism = () => {
     const fetchFooterContent = async () => {
       setStatus("loading");
       try {
-        const response = await axios.get("/api/dummy/footer");
+        const response = await axios.get("/api/utilities/footer");
         setFooters(Array.isArray(response.data.footer) ? response.data.footer : []);
         setStatus("success");
       } catch (err) {
@@ -76,4 +76,4 @@ const FooterOrganism = () => {
   );
 };
 
-export default FooterOrganism;
+export default Footer;

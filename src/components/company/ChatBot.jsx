@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { requestToGroqAI } from "@/utils/groq";
+import { requestToGroqAI } from "../../utils/groq";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
-const ChatAIOrganism = () => {
+const ChatBot = () => {
   const [input, setInput] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -77,12 +77,12 @@ const ChatAIOrganism = () => {
           >
             <button
               onClick={() => handleCopyCode(code, index)}
-              className="absolute top-3 right-2 z-10 bg-transparent text-white border text-[8px] border-white/15 px-3 py-1 text-sm rounded-full hover:bg-gray-300 transition"
+              className="absolute top-2 right-2 z-10 bg-transparent text-white border border-white/15 px-3 py-1 text-sm rounded-full hover:bg-gray-300 transition"
             >
               {copiedIndex === index ? "Copied!" : "Copy"}
             </button>
 
-            <pre className="bg-black text-white border-t border-white/15 text-[8px] p-4 rounded-b-2xl overflow-x-auto mt-2">
+            <pre className="bg-black text-white border-t border-white/15 text-xs p-4 rounded-b-2xl overflow-x-auto mt-2">
               <code>{code}</code>
             </pre>
           </div>
@@ -108,15 +108,15 @@ const ChatAIOrganism = () => {
 
   return (
     <div>
-      <div className="">
+      <div className="pl-3 pr-3 xl:pl-[300px] xl:pr-[300px]">
         
         <div>
           {/* Headline */}
           <div className="pl-5 pr-5 pb-5 bg-none">
-            <Icon icon="fluent:bot-sparkle-48-filled" width="24" height="24" className="text-black mb-5" />
-            <p className="mb-3 text-black text-left text-xl font-medium">TanyaAI</p>
+            <Icon icon="fluent:bot-sparkle-48-filled" width="96" height="96" className="text-primary mb-5" />
+            <p className="mb-3 text-black text-left text-3xl font-medium">~ Customer Service</p>
             {/* <p className="text-xl font-thin text-white/75"><u><a href="https://github.com/yogawan/jawiraiv1.6.3">Open Source</a></u> <i className="text-white">User Interface</i> to interact with AI Model.</p> */}
-            <p className="text-xs text-black/50">Ask Anything ~ Tanya apa saja tentang MekarJS, saya adalah asisten AI berbasis LLM dari Meta yang di modifikasi oleh Yogawan. Saya siap membantu anda.</p>
+            <p className="text-xl text-black/50">Ask Anything ~ Tanya apa saja tentang MekarJS.</p>
           </div>
 
           {/* Form */}
@@ -138,8 +138,8 @@ const ChatAIOrganism = () => {
                 onClick={handleSend}
                 className={`p-5 w-[64px] font-semibold rounded-full transition ${
                   isLoading
-                    ? "bg-black text-white cursor-not-allowed"
-                    : "bg-black text-white"
+                    ? "bg-primary text-black cursor-not-allowed"
+                    : "bg-primary text-black"
                 }`}
                 disabled={isLoading}
               >
@@ -153,7 +153,7 @@ const ChatAIOrganism = () => {
           <div className="flex-col">
             {chatHistory.length === 0 ? (
               <div className="mt-5">
-                <p className="text-xs text-center p-1 font-light leading-[120%] text-black/50">Jika ada pesan yang tidak sepantasnya, silahkan lapor disini <u><a href="https://github.com/yogawan/jawiraiv1.6.3">disini</a></u></p>
+                <p className="text-xl text-left pl-5 font-light leading-[120%] text-black/50">Jika ada pesan yang tidak sepantasnya, silahkan lapor disini <u><a href="https://github.com/yogawan/jawiraiv1.6.3">disini</a></u></p>
               </div>
             ) : (
               chatHistory.map((message, index) => (
@@ -164,21 +164,21 @@ const ChatAIOrganism = () => {
                   }`}
                 >
                   {message.role !== "user" && (
-                    <div className="text-center text-xs text-black mt-3">
-                      <Icon icon="line-md:chat-filled" width="16" height="16" />
+                    <div className="text-center text-xs text-black mt-4">
+                      <Icon icon="line-md:chat-filled" width="24" height="24" />
                     </div>
                   )}
                   <div className="flex-col">
                     <div
                       className={`w-fit p-3 rounded-xl ${
                         message.role === "user"
-                          ? "text-xs bg-background text-black/75"
-                          : "text-xs bg-background text-black/75"
+                          ? "bg-background text-black/75"
+                          : "bg-background text-black/75"
                       }`}
                     >
                       {message.role === "ai"
                         ? renderContent(message.content)
-                        : <p className="text-xs">{message.content}</p>}
+                        : <p>{message.content}</p>}
                     </div>
                   </div>
                 </div>
@@ -187,8 +187,8 @@ const ChatAIOrganism = () => {
 
             {isLoading && (
               <div className="flex justify-start m-5">
-                <Icon icon="line-md:loading-twotone-loop" width="16" height="16" className="mt-3 text-black"/>
-                <div className="text-xs max-w-md p-3 rounded-lg bg-background text-black/75">
+                <Icon icon="line-md:loading-twotone-loop" width="24" height="24" className="mt-4 text-black"/>
+                <div className="max-w-md p-3 rounded-lg bg-background text-black/75">
                   Typing...
                 </div>
               </div>
@@ -196,10 +196,10 @@ const ChatAIOrganism = () => {
           </div>
         </div>
 
-        <div className="flex justify-center p-5">
+        <div className="flex justify-start p-5">
           <button
             onClick={handleClearHistory}
-            className="px-6 py-3 bg-black text-white rounded-full"
+            className="px-6 py-3 bg-primary text-black rounded-full"
           >
             Clear History
           </button>
@@ -209,4 +209,4 @@ const ChatAIOrganism = () => {
   );
 };
 
-export default ChatAIOrganism;
+export default ChatBot;

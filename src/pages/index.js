@@ -1,27 +1,27 @@
 import Head from "next/head";
-import NavbarOrganism from "@/components/organisms/NavbarOrganism";
-import HeroOrganism from "@/components/organisms/HeroOrganism";
-import FooterOrganism from "@/components/organisms/FooterOrganism";
-import CompanyOrganism from "@/components/organisms/CompanyOrganism";
-import CSOrganism from "@/components/organisms/CSOrganism";
-// import LocationCardOrganism from "@/components/organisms/LocationCardOrganism";
-import GalleryOrganism from "@/components/organisms/GalleryOrganism";
+import Navbar from "@/components/company/Navbar";
+import Hero from "@/components/company/Hero";
+import Carousel from "@/components/company/Carousel";
+import Company from "@/components/company/Company";
+import ChatBot from "@/components/company/ChatBot";
+import Footer from "@/components/company/Footer";
 
-export default function Home() {
+const HomePage = () => {
   return (
     <>
       <Head>
         <title>MekarJS</title>
       </Head>
       <div>
-        <NavbarOrganism></NavbarOrganism>
-        <GalleryOrganism></GalleryOrganism>
-        <HeroOrganism></HeroOrganism>
-        <CompanyOrganism></CompanyOrganism>
-        {/* <LocationCardOrganism></LocationCardOrganism> */}
-        <CSOrganism></CSOrganism>
-        <FooterOrganism></FooterOrganism>
+        <Navbar/>
+        <Carousel/>
+        <Hero/>
+        <Company/>
+        <ChatBot/>
+        <Footer/>
       </div>
     </>
   );
 }
+
+export default HomePage;

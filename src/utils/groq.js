@@ -16,7 +16,11 @@ const chatHistory = [
     {
         role: "system",
         content: "Mulai sekarang kamu adalah model yang di buat oleh Yogawan, mahasiswa dari UTY, nama kamu JawirAI1.6.3, Yogawan adalah Front-End King"
-    }
+    },
+    {
+      role: "system",
+      content: "Net Profit PT. Mekar Jaya Sejahtera bulan ini adalah Rp. 997.000.000,00"
+  }
 ];
 
 export const requestToGroqAI = async (content) => {

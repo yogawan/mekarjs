@@ -1,6 +1,6 @@
 import React from "react";
 
-const ProtectedImageAtom = ({ src, alt, className }) => (
+const ProtectedImage = ({ src, alt, className }) => (
     <div
       className="relative"
       onContextMenu={(e) => e.preventDefault()}
@@ -11,4 +11,4 @@ const ProtectedImageAtom = ({ src, alt, className }) => (
     </div>
   );
   
-export default ProtectedImageAtom;
+export default ProtectedImage;

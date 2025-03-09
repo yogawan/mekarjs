@@ -1,5 +1,5 @@
 import React from "react";
-import ProtectedImageAtom from "../atoms/ProtectedImageAtom";
+import ProtectedImageAtom from "../utilities/ProtectedImage";
 
 const companyLogos = [
   "/company/01.png",
@@ -10,7 +10,7 @@ const companyLogos = [
   "/company/06.png",
 ];
 
-const CompanyLogos = () => {
+const Company = () => {
   return (
     <div className="mb-10 relative w-full overflow-hidden bg-background py-4">
       <div className="flex w-max animate-scroll gap-16 xl:gap-32">
@@ -22,4 +22,4 @@ const CompanyLogos = () => {
   );
 };
 
-export default CompanyLogos;
+export default Company;

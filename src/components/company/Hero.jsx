@@ -1,7 +1,7 @@
-import ProtectedImageAtom from "../atoms/ProtectedImageAtom";
+import ProtectedImageAtom from "../utilities/ProtectedImage";
 import { Icon } from "@iconify/react";
 
-const HeroOrganism = () => {
+const Hero = () => {
     return (
         <div className="mb-5 text-center">
 
@@ -62,4 +62,4 @@ const HeroOrganism = () => {
     )
 }
 
-export default HeroOrganism;
+export default Hero;
