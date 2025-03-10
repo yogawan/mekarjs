@@ -7,7 +7,7 @@ const Sidebar = () => {
     const router = useRouter();
 
     const menuItems = [
-        { href: "/", icon: "tabler:chart-line", label: "Landing Page" },
+        { href: "/", icon: "material-symbols:home", label: "Landing Page" },
         { href: "/overview", icon: "tabler:chart-line", label: "Dashboard Overview" },
         { href: "/cms", icon: "mdi:web", label: "Manajemen Website" },
         { href: "/finance", icon: "gridicons:arrow-down", label: "Keuangan" },

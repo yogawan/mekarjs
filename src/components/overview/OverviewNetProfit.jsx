@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Icon } from "@iconify/react";
 
-const OverviewNetProfit = ({ summary, height, background, color }) => {
+const OverviewNetProfit = ({ summary, type, height, background, color }) => {
   const [isHidden, setIsHidden] = useState(true);
 
   if (!summary) return null;
@@ -12,6 +12,8 @@ const OverviewNetProfit = ({ summary, height, background, color }) => {
         <p className={`text-3xl font-bold ${color}`}>Net Profit</p>
         <Icon icon="iconoir:wallet-solid" width="24" className={color} height="24" />
       </div>
+
+      <p className={color}>{type}</p>
 
       <p className={`text-3xl font-bold ${color}`}>
         {isHidden ? "***************" : `Rp ${summary.net_profit.toLocaleString()},00`}

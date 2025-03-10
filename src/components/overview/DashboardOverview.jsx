@@ -38,8 +38,8 @@ const DashboardOverview = () => {
   return (
     <div>
       <OverviewHeader />
-      <OverviewNetProfit background={"bg-black"} color={"text-white"} height={"h-[256px]"} summary={summary} />
-      <OverviewNetProfit background={"bg-black/5"} color={"text-black"} height={"h-[200px]"} summary={summary} />
+      <OverviewNetProfit background={"bg-black"} type="Transaksi di Aplikasi" color={"text-white"} height={"h-[256px]"} summary={summary} />
+      <OverviewNetProfit background={"bg-black/5"} type="Transaksi di Tempat" color={"text-black"} height={"h-[256px]"} summary={summary} />
       <OverviewStats summary={summary} />
     </div>
   );
