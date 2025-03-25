@@ -24,7 +24,7 @@ const Navbar = () => {
         </div>
 
         <div className="flex justify-between items-center">
-          <Link className="text-black px-6 py-3 mr-5 text-xs border border-black/15 rounded-full" href={"/overview"} >Dashboard</Link>
+          <Link className="text-black px-6 py-3 mr-5 text-xs bg-primary rounded-full" href={"/login"} >Login</Link>
           <button
             className="relative w-10 h-10 flex items-center justify-center focus:outline-none"
             onClick={toggleMenu}

@@ -1,5 +1,7 @@
+import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import ProtectedImage from "@/components/utilities/ProtectedImage";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -31,14 +33,18 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-20 p-6 border rounded shadow">
-      <h2 className="text-2xl font-bold mb-4">Admin Login</h2>
-      {error && <p className="mb-4 text-red-500">{error}</p>}
+    <div className="flex justify-center items-center flex-wrap h-screen p3 m-3">
       <form onSubmit={handleLogin}>
+        {error && <p className="mb-4 text-red-500">{error}</p>}
+        <ProtectedImage
+          src="/favicon/F2.png"
+          alt="MekarJS"
+          className="w-32 animate-spin360 m-5"
+        />
         <input
           type="email"
           placeholder="Email"
-          className="w-full p-2 border rounded mb-3"
+          className="w-full p-2 border border-black/15 rounded-xl bg-background mb-3"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -46,17 +52,22 @@ export default function LoginPage() {
         <input
           type="password"
           placeholder="Password"
-          className="w-full p-2 border rounded mb-3"
+          className="w-full p-2 border border-black/15 rounded-xl bg-background mb-3"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+        <br />
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+          className="w-full bg-primary text-black p-5 rounded-full hover:bg-primary/75"
         >
           Login
         </button>
+        <br />
+        <div className="text-center">
+          <Link href={"/"} className="text-black/75 text-xs text-center mt-5">Kembali ke Beranda</Link>
+        </div>
       </form>
     </div>
   );

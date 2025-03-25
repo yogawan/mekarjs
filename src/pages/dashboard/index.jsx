@@ -5,7 +5,7 @@ import Sidebar from "@/components/company/Sidebar";
 import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/router";
 
-const OverviewPage = () => {
+const DashboardPage = () => {
   const { isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
 
@@ -43,4 +43,4 @@ const OverviewPage = () => {
   )
 }
 
-export default OverviewPage;
+export default DashboardPage;
