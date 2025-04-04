@@ -1,4 +1,4 @@
-import EmployeeList from "@/components/employee/EmployeeList";
+import EmployeeList from "@/components/karyawan/EmployeeList";
 import SidebarOrganism from "@/components/global/Sidebar"
 
 const ChatAIPage = () => {

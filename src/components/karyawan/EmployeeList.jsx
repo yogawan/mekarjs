@@ -23,10 +23,9 @@ export default function EmployeeList() {
 
   const [selectedId, setSelectedId] = useState(null);
 
-  // Fetch data employees
   const fetchEmployees = async () => {
     try {
-      const response = await axios.get("/api/role/admin/employee");
+      const response = await axios.get("/api/role/admin/karyawan");
       setEmployees(response.data.data);
     } catch (error) {
       console.error("Gagal mengambil data karyawan", error);
@@ -37,7 +36,6 @@ export default function EmployeeList() {
     fetchEmployees();
   }, []);
 
-  // Handle modal open
   const openModal = (employee = null) => {
     setModalOpen(true);
     if (employee) {
@@ -77,14 +75,13 @@ export default function EmployeeList() {
     }
   };
 
-  // Handle form submit (Add & Edit)
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (isEdit) {
-        await axios.put(`/api/role/admin/employee/${selectedId}`, formData);
+        await axios.put(`/api/role/admin/karyawan/${selectedId}`, formData);
       } else {
-        await axios.post("/api/role/admin/employee", formData);
+        await axios.post("/api/role/admin/karyawan", formData);
       }
       fetchEmployees();
       setModalOpen(false);
@@ -93,11 +90,10 @@ export default function EmployeeList() {
     }
   };
 
-  // Handle delete
   const handleDelete = async (id) => {
     if (confirm("Apakah Anda yakin ingin menghapus karyawan ini?")) {
       try {
-        await axios.delete(`/api/role/admin/employee/${id}`);
+        await axios.delete(`/api/role/admin/karyawan/${id}`);
         fetchEmployees();
       } catch (error) {
         console.error("Gagal menghapus data", error);
@@ -108,7 +104,7 @@ export default function EmployeeList() {
   const handleCopyAccountNumber = (accountNumber, id) => {
     navigator.clipboard.writeText(accountNumber);
     setCopiedId(id);
-    setTimeout(() => setCopiedId(null), 2000); // Reset setelah 2 detik
+    setTimeout(() => setCopiedId(null), 2000);
   };
 
   return (
