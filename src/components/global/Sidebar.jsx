@@ -9,14 +9,14 @@ const Sidebar = () => {
     const menuItems = [
         { href: "/", icon: "material-symbols:home", label: "Beranda" },
         { href: "/dashboard", icon: "tabler:chart-line", label: "Dashboard" },
-        { href: "/content", icon: "mdi:web", label: "CMS" },
-        { href: "/finance", icon: "gridicons:arrow-down", label: "Keuangan" },
-        { href: "/inventory", icon: "mdi:warehouse", label: "Inventaris" },
         { href: "/penjualan", icon: "mdi:cart-outline", label: "Penjualan" },
         { href: "/pembelian", icon: "mdi:truck-fast", label: "Pembelian" },
-        { href: "/production", icon: "mdi:factory", label: "Produksi" },
-        { href: "/human_resource", icon: "mdi:account-group-outline", label: "SDM & Penggajian" },
+        { href: "/human_resource", icon: "mdi:account-group-outline", label: "Karyawan" },
         { href: "/chat", icon: "mingcute:ai-fill", label: "TanyaAI" },
+        { href: "/inventory", icon: "mdi:warehouse", label: "Inventaris" },
+        { href: "/production", icon: "mdi:factory", label: "Produksi" },
+        { href: "/finance", icon: "gridicons:arrow-down", label: "Keuangan" },
+        { href: "/content", icon: "mdi:web", label: "CMS" },
     ];
 
     return (
