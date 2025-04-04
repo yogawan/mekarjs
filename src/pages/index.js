@@ -1,10 +1,10 @@
 import Head from "next/head";
-import Navbar from "@/components/company/Navbar";
-import Hero from "@/components/company/Hero";
-import Carousel from "@/components/company/Carousel";
-import Company from "@/components/company/Company";
-import ChatBot from "@/components/company/ChatBot";
-import Footer from "@/components/company/Footer";
+import Navbar from "@/components/global/Navbar";
+import Hero from "@/components/global/Hero";
+import Carousel from "@/components/global/Carousel";
+import Company from "@/components/global/Company";
+import ChatBot from "@/components/global/ChatBot";
+import Footer from "@/components/global/Footer";
 
 const HomePage = () => {
   return (

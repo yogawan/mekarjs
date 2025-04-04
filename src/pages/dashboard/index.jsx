@@ -1,7 +1,7 @@
 import React from "react";
 import DashboardOverview from "@/components/overview/DashboardOverview";
 import AssistantAI from "@/components/chat/AssistantAI";
-import Sidebar from "@/components/company/Sidebar";
+import Sidebar from "@/components/global/Sidebar";
 import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/router";
 

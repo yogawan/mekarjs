@@ -7,16 +7,16 @@ const Sidebar = () => {
     const router = useRouter();
 
     const menuItems = [
-        { href: "/", icon: "material-symbols:home", label: "Landing Page" },
-        { href: "/dashboard", icon: "tabler:chart-line", label: "Dashboard Overview" },
-        { href: "/content", icon: "mdi:web", label: "Manajemen Website" },
+        { href: "/", icon: "material-symbols:home", label: "Beranda" },
+        { href: "/dashboard", icon: "tabler:chart-line", label: "Dashboard" },
+        { href: "/content", icon: "mdi:web", label: "CMS" },
         { href: "/finance", icon: "gridicons:arrow-down", label: "Keuangan" },
         { href: "/inventory", icon: "mdi:warehouse", label: "Inventaris" },
-        { href: "/sales", icon: "mdi:cart-outline", label: "Penjualan & CRM" },
-        { href: "/purchase", icon: "mdi:truck-fast", label: "Pembelian & Supplier" },
+        { href: "/penjualan", icon: "mdi:cart-outline", label: "Penjualan" },
+        { href: "/pembelian", icon: "mdi:truck-fast", label: "Pembelian" },
         { href: "/production", icon: "mdi:factory", label: "Produksi" },
         { href: "/human_resource", icon: "mdi:account-group-outline", label: "SDM & Penggajian" },
-        { href: "/chatai", icon: "mingcute:ai-fill", label: "TanyaAI" },
+        { href: "/chat", icon: "mingcute:ai-fill", label: "TanyaAI" },
     ];
 
     return (

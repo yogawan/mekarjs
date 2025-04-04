@@ -26,7 +26,7 @@ export default function LoginPage() {
     if (res.ok) {
       localStorage.setItem("token", data.token);
 
-      router.push("/overview");
+      router.push("/dashboard");
     } else {
       setError(data.message || "Login gagal");
     }
@@ -44,7 +44,7 @@ export default function LoginPage() {
         <input
           type="email"
           placeholder="Email"
-          className="w-full p-2 border border-black/15 rounded-xl bg-background mb-3"
+          className="text-black/50 w-full p-2 border border-black/15 rounded-xl bg-background mb-3"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -52,7 +52,7 @@ export default function LoginPage() {
         <input
           type="password"
           placeholder="Password"
-          className="w-full p-2 border border-black/15 rounded-xl bg-background mb-3"
+          className="text-black/50 w-full p-2 border border-black/15 rounded-xl bg-background mb-3"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required

@@ -1,5 +1,5 @@
 import AssistantAI from "@/components/chat/AssistantAI";
-import SidebarOrganism from "@/components/company/Sidebar"
+import SidebarOrganism from "@/components/global/Sidebar"
 
 const ChatAIPage = () => {
     return (
