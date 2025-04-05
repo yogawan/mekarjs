@@ -24,6 +24,8 @@ const Hero = () => {
           {/* Headline */}
           <h1 className="mb-5 font-medium text-black tracking-4p leading-75 mt-5 text-[36px] xs:text-5xl xs:leading-75 sm:text-7xl sm:leading-75 md:text-8xl md:leading-75 lg:text-8xl lg:leading-75 xl:text-8xl xl:leading-75">
             Menyediakan Material <br />Konstruksi Dengan <br />Kualitas Terbaik
+            {/* ERP With<br />
+            AI Integrated */}
           </h1>
 
           {/* Sub Headline */}

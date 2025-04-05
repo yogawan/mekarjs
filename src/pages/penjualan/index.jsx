@@ -117,68 +117,130 @@ export default function PenjualanIndex() {
     <div className="text-black ml-[256px]">
       <Sidebar />
 
-      <form className="flex flex-col" onSubmit={handleSubmit}>
-        <h3>Tambah Penjualan</h3>
+      <h1 className="ml-5 mt-5">Daftar Penjualan</h1>
 
-        <input name="pelanggan.nama" placeholder="Nama Pelanggan" value={form.pelanggan.nama} onChange={handleChange} required />
-        <input name="pelanggan.email" placeholder="Email" value={form.pelanggan.email} onChange={handleChange} required />
-        <input name="pelanggan.telepon" placeholder="Telepon" value={form.pelanggan.telepon} onChange={handleChange} required />
-        <input name="pelanggan.alamat" placeholder="Alamat" value={form.pelanggan.alamat} onChange={handleChange} required />
+      <form className="flex" onSubmit={handleSubmit}>
 
-        <select name="items.nama" value={form.items.nama} onChange={handleChange} required>
-          <option value="">Pilih Material</option>
-          {materialOptions.map((m) => (
-            <option key={m.nama} value={m.nama}>
-              {m.nama}
-            </option>
-          ))}
-        </select>
+        <div className="flex flex-col w-[50%] p-1">
+          <input
+            className="mt-1 p-3 border border-black/15 bg-background rounded-full"
+            name="pelanggan.nama"
+            placeholder="Nama Pelanggan"
+            value={form.pelanggan.nama}
+            onChange={handleChange}
+            required
+          />
+          
+          <input
+            className="mt-1 p-3 border border-black/15 bg-background rounded-full"
+            name="pelanggan.email"
+            placeholder="Email"
+            value={form.pelanggan.email}
+            onChange={handleChange}
+            required
+          />
 
-        <input name="items.harga" placeholder="Harga" type="number" value={form.items.harga} readOnly />
+          <input
+            className="mt-1 p-3 border border-black/15 bg-background rounded-full"
+            name="pelanggan.telepon"
+            placeholder="Telepon"
+            value={form.pelanggan.telepon}
+            onChange={handleChange}
+            required
+          />
+
+          <input
+            className="mt-1 p-3 border border-black/15 bg-background rounded-full"
+            name="pelanggan.alamat"
+            placeholder="Alamat"
+            value={form.pelanggan.alamat}
+            onChange={handleChange}
+            required
+          />
+
+          <select className="mt-1 p-3 border border-black/15 bg-background rounded-full" name="items.nama" value={form.items.nama} onChange={handleChange} required>
+            <option value="">Pilih Material</option>
+            {materialOptions.map((m) => (
+              <option key={m.nama} value={m.nama}>
+                {m.nama}
+              </option>
+            ))}
+          </select>
+
+          <input
+            className="mt-1 p-3 border border-black/15 bg-background rounded-full"
+            name="items.harga"
+            placeholder="Harga"
+            type="number"
+            value={form.items.harga}
+            readOnly
+          />
+        </div>
+
+        <div className="flex flex-col w-[50%] p-1">
+          <input
+            className="mt-1 p-3 border border-black/15 bg-background rounded-full"
+            name="items.jumlah"
+            placeholder="Jumlah"
+            type="number"
+            value={form.items.jumlah}
+            onChange={handleChange}
+            required
+          />
+
+          <select className="mt-1 p-3 border border-black/15 bg-background rounded-full" name="status" value={form.status} onChange={handleChange} required>
+            <option value="">Pilih Status</option>
+            {statusOptions.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+
+          <select className="mt-1 p-3 border border-black/15 bg-background rounded-full" name="metodeBayar" value={form.metodeBayar} onChange={handleChange} required>
+            <option value="">Pilih Metode Pembayaran</option>
+            {metodeBayarOptions.map((m) => (
+              <option key={m} value={m}>
+                {m}
+              </option>
+            ))}
+          </select>
+
+          <select className="mt-1 p-3 border border-black/15 bg-background rounded-full" name="statusBayar" value={form.statusBayar} onChange={handleChange} required>
+            <option value="">Pilih Status Pembayaran</option>
+            {statusBayarOptions.map((sb) => (
+              <option key={sb} value={sb}>
+                {sb}
+              </option>
+            ))}
+          </select>
+
+          <input
+            className="mt-1 p-3 border border-black/15 bg-background rounded-full"
+            name="tanggal"
+            placeholder="Tanggal"
+            type="date"
+            value={form.tanggal}
+            onChange={handleChange}
+            required
+          />
         
-        <input name="items.jumlah" placeholder="Jumlah" type="number" value={form.items.jumlah} onChange={handleChange} required />
+          <button className="mt-1 p-3 bg-black text-white rounded-full" type="submit">Catat Transaksi</button>
+        </div>
 
-        <select name="status" value={form.status} onChange={handleChange} required>
-          <option value="">Pilih Status</option>
-          {statusOptions.map((s) => (
-            <option key={s} value={s}>
-              {s}
-            </option>
-          ))}
-        </select>
-
-        <select name="metodeBayar" value={form.metodeBayar} onChange={handleChange} required>
-          <option value="">Pilih Metode Pembayaran</option>
-          {metodeBayarOptions.map((m) => (
-            <option key={m} value={m}>
-              {m}
-            </option>
-          ))}
-        </select>
-
-        <select name="statusBayar" value={form.statusBayar} onChange={handleChange} required>
-          <option value="">Pilih Status Pembayaran</option>
-          {statusBayarOptions.map((sb) => (
-            <option key={sb} value={sb}>
-              {sb}
-            </option>
-          ))}
-        </select>
-
-        <input name="tanggal" placeholder="Tanggal" type="date" value={form.tanggal} onChange={handleChange} required />
-
-        <button type="submit">Tambah</button>
       </form>
 
-      <ul>
+      <br />
+
+      <div className="flex justify-start flex-wrap">
         {penjualans.map((p) => (
-          <li key={p._id}>
+          <div className="w-[390px] m-1 border border-black/15 rounded-3xl" cl key={p._id}>
             {p.pelanggan.nama} - {p.items.nama} ({p.items.jumlah}) - {p.total}
             <button onClick={() => router.push(`/penjualan/${p._id}`)}>Edit</button>
             <button onClick={() => handleDelete(p._id)}>Delete</button>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

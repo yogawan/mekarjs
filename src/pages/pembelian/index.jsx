@@ -119,64 +119,121 @@ export default function PembelianPage() {
   return (
     <div className="text-black ml-[256px]">
       <Sidebar />
-      <h1>Daftar Pembelian</h1>
-      <ul>
-        {data.map((item) => (
-          <li key={item._id}>
-            <strong>{item.supplier.nama}</strong> - {item.items.nama} - {item.total}
-            <button onClick={() => router.push(`/pembelian/${item._id}`)}>Detail</button>
-          </li>
-        ))}
-      </ul>
+      <h1 className="ml-5 mt-5">Daftar Pembelian</h1>
 
-      <hr />
-      <h2>Tambah Pembelian</h2>
-      <form onSubmit={handleSubmit}>
-        <input name="supplier.nama" placeholder="Nama Supplier" value={form.supplier.nama} onChange={handleChange} />
-        <input name="supplier.email" placeholder="Email" value={form.supplier.email} onChange={handleChange} />
-        <input name="supplier.telepon" placeholder="Telepon" value={form.supplier.telepon} onChange={handleChange} />
-        <input name="supplier.alamat" placeholder="Alamat" value={form.supplier.alamat} onChange={handleChange} />
+      <form className="flex" onSubmit={handleSubmit}>
 
-        <select name="items.nama" value={form.items.nama} onChange={handleChange} required>
-          <option value="">Pilih Material</option>
-          {materialOptions.map((m) => (
-            <option key={m.nama} value={m.nama}>
-              {m.nama}
-            </option>
-          ))}
-        </select>
+        <div className="flex flex-col w-[50%] p-1">
+          <input
+            className="mt-1 p-3 border border-black/15 bg-background rounded-full"
+            name="supplier.nama"
+            placeholder="Nama Supplier"
+            value={form.supplier.nama}
+            onChange={handleChange}
+          />
 
-        <input
-          name="items.harga"
-          placeholder="Harga"
-          type="number"
-          value={form.items.harga}
-          readOnly
-        />
+          <input
+            className="mt-1 p-3 border border-black/15 bg-background rounded-full"
+            name="supplier.email"
+            placeholder="Email"
+            value={form.supplier.email}
+            onChange={handleChange}
+          />
 
-        <input
-          type="number"
-          name="items.jumlah"
-          min="1"
-          placeholder="Jumlah"
-          value={form.items.jumlah}
-          onChange={handleChange}
-        />
+          <input
+            className="mt-1 p-3 border border-black/15 bg-background rounded-full"
+            name="supplier.telepon"
+            placeholder="Telepon"
+            value={form.supplier.telepon}
+            onChange={handleChange}
+          />
 
-        <select name="metodeBayar" value={form.metodeBayar} onChange={handleChange} required>
-          <option value="">Pilih Metode Bayar</option>
-          <option value="Transfer Bank">Transfer Bank</option>
-          <option value="Tunai">Tunai</option>
-          <option value="QRIS">QRIS</option>
-        </select>
+          <input
+            className="mt-1 p-3 border border-black/15 bg-background rounded-full"
+            name="supplier.alamat"
+            placeholder="Alamat"
+            value={form.supplier.alamat}
+            onChange={handleChange}
+          />
 
-        <select name="statusBayar" value={form.statusBayar} onChange={handleChange} required>
-          <option value="Belum Bayar">Belum Bayar</option>
-          <option value="Sudah Bayar">Sudah Bayar</option>
-        </select>
+          <select className="mt-1 p-3 border border-black/15 bg-background rounded-full" name="items.nama" value={form.items.nama} onChange={handleChange} required>
+            <option value="">Pilih Material</option>
+            {materialOptions.map((m) => (
+              <option key={m.nama} value={m.nama}>
+                {m.nama}
+              </option>
+            ))}
+          </select>
+        </div>
 
-        <button type="submit">Simpan</button>
+        <div className="flex flex-col w-[50%] p-1">
+          <input
+            className="mt-1 p-3 border border-black/15 bg-background rounded-full"
+            name="items.harga"
+            placeholder="Harga"
+            type="number"
+            value={form.items.harga}
+            readOnly
+          />
+
+          <input
+            className="mt-1 p-3 border border-black/15 bg-background rounded-full"
+            type="number"
+            name="items.jumlah"
+            min="1"
+            placeholder="Jumlah"
+            value={form.items.jumlah}
+            onChange={handleChange}
+          />
+
+          <select className="mt-1 p-3 border border-black/15 bg-background rounded-full" name="metodeBayar" value={form.metodeBayar} onChange={handleChange} required>
+            <option value="">Pilih Metode Bayar</option>
+            <option value="Transfer Bank">Transfer Bank</option>
+            <option value="Tunai">Tunai</option>
+            <option value="QRIS">QRIS</option>
+          </select>
+
+          <select className="mt-1 p-3 border border-black/15 bg-background rounded-full" name="statusBayar" value={form.statusBayar} onChange={handleChange} required>
+            <option value="Belum Bayar">Belum Bayar</option>
+            <option value="Sudah Bayar">Sudah Bayar</option>
+          </select>
+
+          <button className="mt-1 p-3 bg-black text-white rounded-full" type="submit">Tambah</button>
+        </div>
+
       </form>
+
+      <br />
+
+      <div className="flex justify-start flex-wrap">
+        {data.map((item) => (
+          <div className="w-[385px] m-1 p-3 rounded-3xl border border-black/15" key={item._id}>
+            <div className="border-b border-black/15">
+              <p className="">{item.supplier.nama}</p>
+              <p className="">{item.supplier.email}</p>
+              <p className="">{item.supplier.telepon}</p>
+              <p className="">{item.supplier.alamat}</p>
+            </div>
+            <div className="border-b border-black/15">
+              <p className="">{item.items.nama}</p>
+              <p className="">{item.items.harga}</p>
+              <p className="">{item.items.jumlah}</p>
+            </div>
+            <div className="">
+              <p className="">{item.metodeBayar}</p>
+              <p className="">{item.statusBayar}</p>
+              <p className="">{item.status}</p>
+              <p className="">{item.total}</p>
+              <p className="">{item.tanggal}</p>
+            </div>
+
+            <div className="flex justify-center">
+              <button className="w-full p-3 bg-black text-white rounded-full" onClick={() => router.push(`/pembelian/${item._id}`)}>Detail</button>
+            </div>
+          </div>
+        ))}
+      </div>
+
     </div>
   );
 }

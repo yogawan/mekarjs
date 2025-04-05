@@ -108,7 +108,7 @@ const ChatBot = () => {
 
   return (
     <div>
-      <div className="pl-3 pr-3 xl:pl-[300px] xl:pr-[300px]">
+      <div className="mb-32 pl-3 pr-3 xl:pl-[300px] xl:pr-[300px]">
         
         <div>
           {/* Headline */}

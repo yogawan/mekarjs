@@ -6,17 +6,21 @@ import { useRouter } from "next/router";
 const Sidebar = () => {
     const router = useRouter();
 
+    const handleLogout = () => {
+      localStorage.removeItem("token");
+      router.push("/");
+    };
+
     const menuItems = [
-        { href: "/", icon: "material-symbols:home", label: "Beranda" },
+        // { href: "/", icon: "material-symbols:home", label: "Beranda" },
         { href: "/dashboard", icon: "tabler:chart-line", label: "Dashboard" },
         { href: "/penjualan", icon: "mdi:cart-outline", label: "Penjualan" },
         { href: "/pembelian", icon: "mdi:truck-fast", label: "Pembelian" },
         { href: "/human_resource", icon: "mdi:account-group-outline", label: "Karyawan" },
         { href: "/chat", icon: "mingcute:ai-fill", label: "TanyaAI" },
-        { href: "/inventory", icon: "mdi:warehouse", label: "Inventaris" },
-        { href: "/production", icon: "mdi:factory", label: "Produksi" },
-        { href: "/finance", icon: "gridicons:arrow-down", label: "Keuangan" },
-        { href: "/content", icon: "mdi:web", label: "CMS" },
+        { href: "/inventaris", icon: "mdi:warehouse", label: "Inventaris" },
+        // { href: "/finance", icon: "gridicons:arrow-down", label: "Keuangan" },
+        // { href: "/content", icon: "mdi:web", label: "CMS" },
     ];
 
     return (
@@ -50,6 +54,12 @@ const Sidebar = () => {
                             </li>
                         );
                     })}
+                    <button
+                        onClick={handleLogout}
+                        className="bg-red-500 hover:bg-red-600 text-white py-3 mt-10 rounded-full"
+                    >
+                        Logout
+                    </button>
                 </div>
 
                 {/* Logo Footer */}

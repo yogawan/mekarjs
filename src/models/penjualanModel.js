@@ -1,3 +1,5 @@
+// src/models/penjualanModel.js
+
 import mongoose from "mongoose";
 
 const PenjualanSchema = new mongoose.Schema(
