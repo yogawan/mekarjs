@@ -1,5 +1,5 @@
 import connectDB from "../../../../../lib/mongodb";
-import Employee from "../../../../../models/karyawanModel";
+import Employee from "../../../../../models/Karyawan";
 
 export default async function handler(req, res) {
   await connectDB;

@@ -1,3 +1,4 @@
+// src/models/Karyawan.js
 import mongoose from "mongoose";
 
 const EmployeeSchema = new mongoose.Schema({
@@ -25,7 +26,7 @@ const EmployeeSchema = new mongoose.Schema({
     account_number: String
   },
   join_date: { type: Date, required: true },
-  status: { type: String, enum: ["active", "resigned"], default: "active" },
+  status: { type: String, enum: ["aktif", "resign", "cuti"], default: "aktif" },
   created_at: { type: Date, default: Date.now }
 });
 

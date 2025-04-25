@@ -12,15 +12,15 @@ const Sidebar = () => {
     };
 
     const menuItems = [
-        // { href: "/", icon: "material-symbols:home", label: "Beranda" },
+        { href: "/", icon: "material-symbols:home", label: "Beranda" },
         { href: "/dashboard", icon: "tabler:chart-line", label: "Dashboard" },
         { href: "/penjualan", icon: "mdi:cart-outline", label: "Penjualan" },
         { href: "/pembelian", icon: "mdi:truck-fast", label: "Pembelian" },
         { href: "/human_resource", icon: "mdi:account-group-outline", label: "Karyawan" },
         { href: "/chat", icon: "mingcute:ai-fill", label: "TanyaAI" },
         { href: "/inventaris", icon: "mdi:warehouse", label: "Inventaris" },
-        // { href: "/finance", icon: "gridicons:arrow-down", label: "Keuangan" },
-        // { href: "/content", icon: "mdi:web", label: "CMS" },
+        { href: "/finance", icon: "gridicons:arrow-down", label: "Keuangan" },
+        { href: "/content", icon: "mdi:web", label: "CMS" },
     ];
 
     return (

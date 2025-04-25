@@ -1,21 +1,14 @@
-// src/models/inventarisModel.js
-
+// src/models/Inventaris.js
 import mongoose from "mongoose";
 
 const InventarisSchema = new mongoose.Schema(
   {
-    kodeItem: {
-      type: String,
-      unique: true,
-      required: true,
-    },
-    namaItem: {
+    nama: {
       type: String,
       required: true,
     },
     tipe: {
       type: String,
-      enum: ["Alat Berat", "Sparepart", "Bahan Baku", "ATK", "Lainnya"],
       required: true,
     },
     deskripsi: {
@@ -33,6 +26,7 @@ const InventarisSchema = new mongoose.Schema(
     },
     lokasi: {
       type: String,
+      // Enum PT. Mekar Jaya Sejahtera Cabang 1, Cabang 2 dan Cabang 3
       required: true,
     },
     kondisi: {

@@ -1,7 +1,7 @@
 // src/pages/api/role/admin/inventaris/index.js
 
 import connectDB from "@/lib/mongodb";
-import Inventaris from "@/models/inventarisModel";
+import Inventaris from "@/models/Inventaris";
 
 export default async function handler(req, res) {
   await connectDB();

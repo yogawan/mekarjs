@@ -2,7 +2,7 @@
 
 import connectDB from '@/lib/mongodb';
 import Penjualan from '@/models/penjualanModel';
-import Pembelian from '@/models/pembelianModel';
+import Pembelian from '@/models/Pembelian';
 
 export default async function handler(req, res) {
   await connectDB();

@@ -1,5 +1,4 @@
-// src/models/pembelianModel.js
-
+// src/models/Pembelian.js
 import mongoose from 'mongoose';
 
 const PembelianSchema = new mongoose.Schema({

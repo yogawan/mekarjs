@@ -1,5 +1,5 @@
 import connectDB from '@/lib/mongodb';
-import Pembelian from '@/models/pembelianModel';
+import Pembelian from '@/models/Pembelian';
 
 export default async function handler(req, res) {
   await connectDB();
